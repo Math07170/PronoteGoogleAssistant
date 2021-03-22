@@ -15,13 +15,10 @@ const { stringify } = require('actions-on-google/dist/common');
 const app = dialogflow();
 
 app.intent('Default Welcome Intent', async(conv) => {
-  console.log(typeof conv.user.storage.name === 'undefined')
   if(typeof conv.user.storage.username !== 'undefined' && typeof conv.user.storage.password !== 'undefined' ){
     if(typeof conv.user.storage.name === 'undefined'){
-      console.log(conv.user.storage.password)
       const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
-      conv.user.storage.name = session.name;
-      console.log(session.name)
+      conv.user.storage.name = session.user.name;
       session.logout()
     } 
     conv.ask("<speak>Bonjour, "+String(conv.user.storage.name).split(" ")[1]+" je suis l'assistant vocal pronote comment puis-je vous aider ?</speak>")
