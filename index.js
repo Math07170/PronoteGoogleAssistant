@@ -10,6 +10,7 @@ const password = 'cornichon07';
 
 const {dialogflow, Image, Permission} = require('actions-on-google');
 const { response } = require('express');
+const { stringify } = require('actions-on-google/dist/common');
 
 const app = dialogflow();
 
@@ -18,7 +19,7 @@ app.intent('Default Welcome Intent', async conv => {
     const session = await pronote.login(url, username, password/*, cas*/);
     conv.user.storage.name = session.name;
   }
-  conv.ask("Bonjour, je suis l'assistant vocal pronote comment puis-je vous aider ?")
+  conv.ask("Bonjour, "+String(conv.user.storage.name).split(" ")[1]+" je suis l'assistant vocal pronote comment puis-je vous aider ?")
 })
 
 app.intent('Login', (conv, args) => {
