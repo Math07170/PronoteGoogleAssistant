@@ -15,10 +15,10 @@ const { stringify } = require('actions-on-google/dist/common');
 const app = dialogflow();
 
 app.intent('Default Welcome Intent', async(conv) => {
-  console.log(conv.user.storage.username !== null && conv.user.storage.password !== null)
+  console.log(conv.user.storage.name === null)
   if(conv.user.storage.username !== null && conv.user.storage.password !== null ){
     if(conv.user.storage.name === null){
-      const session = await pronote.login(url, username, password/*, cas*/);
+      const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
       conv.user.storage.name = session.name;
       console.log(session.name)
       session.logout()
@@ -45,7 +45,6 @@ app.intent('Login', (conv, args) => {
   
 })
 app.intent('Emploi du temps', async(conv, args)=>{
-  console.log(conv.user.storage.username + ", "+conv.user.storage.password)
   const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
   
   date = new Date(new Date(args['date-time']).toDateString());
