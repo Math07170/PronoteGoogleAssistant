@@ -17,6 +17,11 @@ app.intent('Default Welcome Intent', conv => {
   console.log(conv.user.storage.Test)
   conv.ask("Bonjour, je suis l'assistant vocal pronote comment puis-je vous aider ?")
 })
+
+app.intent('Login', (conv, args) => {
+  console.log(args)
+  conv.ask("C'est enregistrer merci !")
+})
 app.intent('Emploi du temps', async(conv, args)=>{
   const session = await pronote.login(url, username, password/*, cas*/);
   
