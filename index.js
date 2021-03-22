@@ -18,6 +18,7 @@ app.intent('Default Welcome Intent', async(conv) => {
   console.log(typeof conv.user.storage.name === 'undefined')
   if(typeof conv.user.storage.username !== 'undefined' && typeof conv.user.storage.password !== 'undefined' ){
     if(typeof conv.user.storage.name === 'undefined'){
+      console.log(conv.user.storage.password)
       const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
       conv.user.storage.name = session.name;
       console.log(session.name)
