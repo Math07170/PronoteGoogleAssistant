@@ -13,23 +13,11 @@ const { response } = require('express');
 
 const app = dialogflow();
 
-app.intent('actions.intent.MAIN', conv => {
-  conv.ask(new Permission({
-    context: 'To read your mind',
-    permissions: 'NAME',
-  }))
-})
-
-app.intent('actions.intent.PERMISSION', (conv, input, granted) => {
-  // granted: inferred first (and only) argument value, boolean true if granted, false if not
-  const explicit = conv.arguments.get('PERMISSION') // also retrievable w/ explicit arguments.get
-  const name = conv.user.name
-  console.log(name)
-})
-
-app.intent('Default Welcome Intent', conv => {
-  console.log(conv.user)
-  console.log(conv.user.name.family)
+app.intent('Default Welcome Intent', async conv => {
+  if(conv.user.storage.username !== undefined && conv.user.storage.password !== undefined && conv.user.storage.name === undefined){
+    const session = await pronote.login(url, username, password/*, cas*/);
+    conv.user.storage.name = session.name;
+  }
   conv.ask("Bonjour, je suis l'assistant vocal pronote comment puis-je vous aider ?")
 })
 
@@ -66,6 +54,7 @@ app.intent('Emploi du temps', async(conv, args)=>{
   })
   answer = answer + "</speak>"
   conv.ask(answer)
+  session.logout()
 })
 expressApp.post('/', app)
 
