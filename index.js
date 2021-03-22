@@ -60,6 +60,7 @@ async function main()
         }
     })
     console.log(session)
+    console.log(process.env.PORT)
     
     // etc. les fonctions utilisables sont 'timetable', 'marks', 'contents', 'evaluations', 'absences', 
     // 'homeworks', 'infos', et 'menu', sans oublier les champs 'user' et 'params' qui regorgent d'informations.
