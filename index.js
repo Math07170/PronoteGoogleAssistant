@@ -11,19 +11,24 @@ const password = 'cornichon07';
 const {dialogflow, Image, Permission} = require('actions-on-google');
 const { response } = require('express');
 
-const app = dialogflow();
+app.intent('actions.intent.MAIN', conv => {
+  conv.ask(new Permission({
+    context: 'To read your mind',
+    permissions: 'NAME',
+  }))
+})
 
 app.intent('actions.intent.PERMISSION', (conv, input, granted) => {
   // granted: inferred first (and only) argument value, boolean true if granted, false if not
   const explicit = conv.arguments.get('PERMISSION') // also retrievable w/ explicit arguments.get
-  console.log(conv.user.name)
+  const name = conv.user.name
+  console.log(name)
 })
 
+const app = dialogflow();
+
+
 app.intent('Default Welcome Intent', conv => {
-  conv.ask(new Permission({
-    context: "Pour mieux vous connaître",
-    permissions : 'NAME'
-  }))
   console.log(conv.user)
   console.log(conv.user.name.family)
   conv.ask("Bonjour, je suis l'assistant vocal pronote comment puis-je vous aider ?")
