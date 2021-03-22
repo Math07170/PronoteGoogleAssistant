@@ -55,7 +55,7 @@ app.intent('Emploi du temps', async(conv, args)=>{
   answer = "<speak>"
   timetable.forEach(lesson =>{
     if(!lesson.isAway || !lesson.isCancelled){
-      answer = answer + lesson.subject.toLowerCase() + ", "
+      answer = answer + lesson.subject.toLowerCase().replace('&', 'et') + ", "
     }
   })
   answer = answer + "</speak>"
