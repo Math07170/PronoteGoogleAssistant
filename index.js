@@ -33,6 +33,7 @@ app.intent('Login', (conv, args) => {
   
 })
 app.intent('Emploi du temps', async(conv, args)=>{
+  console.log(conv.user.storage.username + ", "+conv.user.storage.password)
   const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
   
   date = new Date(new Date(args['date-time']).toDateString());
