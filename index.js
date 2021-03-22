@@ -19,7 +19,8 @@ app.intent('Default Welcome Intent', async conv => {
     if(conv.user.storage.name === null){
       const session = await pronote.login(url, username, password/*, cas*/);
       conv.user.storage.name = session.name;
-      console.log(con)
+      console.log(session.name)
+      session.logout()
     } 
     conv.ask("<speak>Bonjour, "+String(conv.user.storage.name).split(" ")[1]+" je suis l'assistant vocal pronote comment puis-je vous aider ?</speak>")
   }else{
