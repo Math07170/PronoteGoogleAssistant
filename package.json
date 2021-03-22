@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Math07170/PronoteGoogleAssistant#readme",
   "dependencies": {
+    "actions-on-google": "^2.13.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "pronote-api": "^2.3.2"
