@@ -8,12 +8,16 @@ const url = 'https://0070004s.index-education.net/pronote/eleve.html';
 const username = 'ROBERT13';
 const password = 'cornichon07';
 
-const {dialogflow, Image} = require('actions-on-google');
+const {dialogflow, Image, Permission} = require('actions-on-google');
 const { response } = require('express');
 
 const app = dialogflow();
 
 app.intent('Default Welcome Intent', conv => {
+  conv.ask(new Permission({
+    context: "Pour mieux vous connaître",
+    permissions : 'NAME'
+  }))
   console.log(conv.user)
   console.log(conv.user.name.family)
   conv.ask("Bonjour, je suis l'assistant vocal pronote comment puis-je vous aider ?")
