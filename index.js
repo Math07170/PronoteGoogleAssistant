@@ -13,6 +13,12 @@ const { response } = require('express');
 
 const app = dialogflow();
 
+app.intent('actions.intent.PERMISSION', (conv, input, granted) => {
+  // granted: inferred first (and only) argument value, boolean true if granted, false if not
+  const explicit = conv.arguments.get('PERMISSION') // also retrievable w/ explicit arguments.get
+  console.log(conv.user.name)
+})
+
 app.intent('Default Welcome Intent', conv => {
   conv.ask(new Permission({
     context: "Pour mieux vous connaître",
