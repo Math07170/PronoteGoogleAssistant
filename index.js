@@ -11,6 +11,8 @@ const password = 'cornichon07';
 const {dialogflow, Image, Permission} = require('actions-on-google');
 const { response } = require('express');
 
+const app = dialogflow();
+
 app.intent('actions.intent.MAIN', conv => {
   conv.ask(new Permission({
     context: 'To read your mind',
@@ -24,9 +26,6 @@ app.intent('actions.intent.PERMISSION', (conv, input, granted) => {
   const name = conv.user.name
   console.log(name)
 })
-
-const app = dialogflow();
-
 
 app.intent('Default Welcome Intent', conv => {
   console.log(conv.user)
