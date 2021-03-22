@@ -14,7 +14,8 @@ const { response } = require('express');
 const app = dialogflow();
 
 app.intent('Default Welcome Intent', conv => {
-  console.log(conv.user.storage.Test)
+  console.log(conv.user)
+  console.log(conv.user.name.family)
   conv.ask("Bonjour, je suis l'assistant vocal pronote comment puis-je vous aider ?")
 })
 
@@ -68,14 +69,7 @@ async function main()
     
     const timetable = await session.timetable(); // Récupérer l'emploi du temps d'aujourd'hui
     const marks = await session.marks(); // Récupérer les notes du trimestre
-    console.log(`L'élève a ${timetable.length} cours aujourd'hui`); 
-    console.log(timetable);
-    timetable.forEach(function (cour){
-        if(cour.isAway){
-            console.log(cour.teacher + " est asent");
-        }
-    })
-    console.log(session)
+    console.log(marks.subjects[0].marks);
     console.log(process.env.PORT)
     
     // etc. les fonctions utilisables sont 'timetable', 'marks', 'contents', 'evaluations', 'absences', 
