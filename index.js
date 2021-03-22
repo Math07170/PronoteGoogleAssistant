@@ -14,7 +14,7 @@ const { stringify } = require('actions-on-google/dist/common');
 
 const app = dialogflow();
 
-app.intent('Default Welcome Intent', async conv => {
+app.intent('Default Welcome Intent', async(conv) => {
   if(conv.user.storage.username !== null && conv.user.storage.password !== null ){
     if(conv.user.storage.name === null){
       const session = await pronote.login(url, username, password/*, cas*/);
