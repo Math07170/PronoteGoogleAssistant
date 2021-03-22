@@ -38,7 +38,7 @@ app.intent('Emploi du temps', async(conv, args)=>{
 })
 expressApp.post('/', app)
 
-expressApp.listen(8080)
+expressApp.listen(process.env.PORT)
 
 // Exemple
 
