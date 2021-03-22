@@ -19,8 +19,8 @@ app.intent('Default Welcome Intent', conv => {
 })
 
 app.intent('Login', (conv, args) => {
-  console.log(args)
   conv.ask("C'est enregistrer merci !")
+  console.log(args)
 })
 app.intent('Emploi du temps', async(conv, args)=>{
   const session = await pronote.login(url, username, password/*, cas*/);
