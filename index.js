@@ -19,11 +19,21 @@ app.intent('Default Welcome Intent', conv => {
 })
 
 app.intent('Login', (conv, args) => {
-  conv.ask("C'est enregistrer merci !")
-  console.log(args)
+  if(args['username'] !== ''){
+    conv.user.storage.username = args['username']
+    conv.ask("Identifiant enregistré !")
+  }else if(args['password'] !== ''){
+    conv.user.storage.password = args['password']
+    conv.ask("Mots de passe enregistré !")
+  }
+  else{
+    conv.ask("Pas de donnée saisie veuillez réessayer")
+  }
+  
+  
 })
 app.intent('Emploi du temps', async(conv, args)=>{
-  const session = await pronote.login(url, username, password/*, cas*/);
+  const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
   
   date = new Date(new Date(args['date-time']).toDateString());
   const timetable = await session.timetable(date)
