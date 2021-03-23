@@ -41,7 +41,11 @@ app.intent('Moyenne Matiere', async (conv, args) => {
   const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
   const marks = await session.marks();
   
-  console.log(marks.subjects[0].averages)
+  marks.subjects.forEach(subject => {
+    if(subject.name = args.matieres){
+      conv.ask(subject.averages.student)
+    }
+  })
 })
 app.intent('Emploi du temps', async(conv, args)=>{
   const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
