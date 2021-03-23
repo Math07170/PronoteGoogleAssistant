@@ -45,8 +45,10 @@ app.intent('Moyenne Matiere', async (conv, args) => {
     console.log(args)
     console.log(subject.averages.student)
     if(subject.name === args.matieres){
-      conv.ask("Vous avez " + String(subject.averages.student) + " sur 20 !")
+      conv.ask("Vous avez " + String(subject.averages.student) + " sur 20 !");
+      return;
     }
+    conv.ask("Pas de notes saisies pour ce trimestre !")
   })
 })
 app.intent('Emploi du temps', async(conv, args)=>{
