@@ -39,10 +39,9 @@ app.intent('Login', (conv, args) => {
 })
 app.intent('Moyenne Matiere', async (conv, args) => {
   const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
-  args.matieres
   const marks = await session.marks();
   
-  console.log(marks)
+  console.log(marks.subjects[0].averages)
 })
 app.intent('Emploi du temps', async(conv, args)=>{
   const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
