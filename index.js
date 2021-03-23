@@ -42,6 +42,8 @@ app.intent('Moyenne Matiere', async (conv, args) => {
   const marks = await session.marks();
   
   marks.subjects.forEach(subject => {
+    console.log(args)
+    console.log(subject)
     if(subject.name === args.matieres){
       conv.ask(subject.averages.student)
     }
