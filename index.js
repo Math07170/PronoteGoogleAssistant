@@ -45,7 +45,7 @@ app.intent('Moyenne Matiere', async (conv, args) => {
     console.log(args)
     console.log(subject.averages.student)
     if(subject.name === args.matieres){
-      conv.ask("Vous avez" + String(subject.averages.student))
+      conv.ask("Vous avez " + String(subject.averages.student) + " sur 20 !")
     }
   })
 })
