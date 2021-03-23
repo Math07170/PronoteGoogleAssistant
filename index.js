@@ -5,8 +5,6 @@ const bodyParser = require('body-parser')
 const expressApp = express().use(bodyParser.json())
 
 const url = 'https://0070004s.index-education.net/pronote/eleve.html';
-const username = 'ROBERT13';
-const password = 'cornichon07';
 
 const {dialogflow, Image, Permission} = require('actions-on-google');
 const { response } = require('express');
@@ -27,7 +25,9 @@ app.intent('Default Welcome Intent', async(conv) => {
   }
   
 })
-
+app.intent('Moyenne Matiere', (conv, args) => {
+  console.log(args)
+})
 app.intent('Login', (conv, args) => {
   if(args['username'] !== ''){
     conv.user.storage.username = args['username']
