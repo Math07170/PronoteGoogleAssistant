@@ -43,9 +43,9 @@ app.intent('Moyenne Matiere', async (conv, args) => {
   
   marks.subjects.forEach(subject => {
     console.log(args)
-    console.log(subject)
+    console.log(subject.averages.student)
     if(subject.name === args.matieres){
-      conv.ask(subject.averages.student)
+      conv.ask("Vous avez" + str(subject.averages.student))
     }
   })
 })
