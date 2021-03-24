@@ -156,7 +156,7 @@ app.intent('Devoirs', async(conv, args)=>{
     });
   }
   console.log(reponse)
-  conv.ask("<speak>Pour cette semaine vous avez :"+reponse + "</speak>")
+  conv.ask("<speak>Vous avez :"+reponse + "</speak>")
 })
 
 expressApp.post('/', app)
