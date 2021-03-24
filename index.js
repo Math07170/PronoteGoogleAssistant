@@ -92,7 +92,7 @@ app.intent('Devoirs', async(conv, args)=>{
 
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, date))
 
-      works.forEach(async(work) => {
+      works.forEach(async (work) => {
         reponse = reponse + work.subject.name + await decodeEntities(work.description)
         console.log(work.description)
       })
@@ -104,13 +104,13 @@ app.intent('Devoirs', async(conv, args)=>{
 
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, dateFrom), pronote.toPronoteWeek(session, dateTo))
 
-      works.forEach(async(work) => {
+      works.forEach(async (work) => {
         reponse = reponse + work.subject.name +  await decodeEntities(work.description)
         console.log(work.description)
       })
     }
-
-    conv.ask(reponse + "</say>")
+    console.log(reponse)
+    conv.ask(reponse + "</speak>")
   }
 })
 
