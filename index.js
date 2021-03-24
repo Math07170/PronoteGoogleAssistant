@@ -105,7 +105,7 @@ app.intent('Devoirs', async(conv, args)=>{
   if(typeof args['date-time'] !== 'undefined' && args['date-time'] !== ''){
 
     //Un jour
-    if(typeof args['date-time'].length === "string"){
+    if(typeof args['date-time'] === "string"){
       date = new Date(args['date-time'])
 
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, date)-1, pronote.toPronoteWeek(session, date)-1)
