@@ -115,7 +115,7 @@ app.intent('Devoirs', async(conv, args)=>{
         if(typeof matiere === 'string'){
           if(work.subject.name !== matiere && matiere !== '') return;
         }
-        if(work.for < dateFrom || work.for > dateTo) return;
+        if(work.for < dateFrom || work.for > dateTo || work.for < new Date()) return;
         reponse = reponse +" En "+ work.subject.name.toLowerCase() +": "+  decodeEntities(work.description)
         console.log(reponse)
       })
@@ -131,7 +131,7 @@ app.intent('Devoirs', async(conv, args)=>{
         if(typeof matiere === 'string'){
           if(work.subject.name !== matiere && matiere !== '') return;
         }
-        if(work.for < dateFrom || work.for > dateTo) return;
+        if(work.for < dateFrom || work.for > dateTo || work.for < new Date()) return;
 
         reponse = reponse +" En "+ work.subject.name.toLowerCase() +": "+  decodeEntities(work.description)
         console.log(work.description)
