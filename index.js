@@ -91,8 +91,8 @@ app.intent('Devoirs', async(conv, args)=>{
       date = new Date(args['date-time'])
 
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, date))
-      
-      works.forEach(work => {
+
+      works.forEach(async(work) => {
         reponse = reponse + work.subject.name + await decodeEntities(work.description)
         console.log(work.description)
       })
@@ -104,7 +104,7 @@ app.intent('Devoirs', async(conv, args)=>{
 
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, dateFrom), pronote.toPronoteWeek(session, dateTo))
 
-      works.forEach(work => {
+      works.forEach(async(work) => {
         reponse = reponse + work.subject.name +  await decodeEntities(work.description)
         console.log(work.description)
       })
