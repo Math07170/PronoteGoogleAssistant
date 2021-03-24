@@ -118,9 +118,9 @@ app.intent('Devoirs', async(conv, args)=>{
         reponse = reponse +" En "+ work.subject.name.toLowerCase() +": "+  decodeEntities(work.description)
         console.log(reponse)
       })
-
+    }
     //Une période
-    }else{
+    else{
       dateFrom = new Date(args['date-time'].startDate)
       dateTo = new Date(args['date-time'].endDate)
 
@@ -139,7 +139,7 @@ app.intent('Devoirs', async(conv, args)=>{
     
   }else{
     console.log("Else")
-    const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(new Date))
+    const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(new Date()))
     works.forEach((work) => {
       if(typeof matiere === 'string'){
         if(work.subject.name !== matiere) return;
