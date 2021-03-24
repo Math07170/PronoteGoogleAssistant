@@ -13,7 +13,7 @@ const { response } = require('express');
 const { stringify } = require('actions-on-google/dist/common');
 
 //Utils
-async function decodeEntities(encodedString) {
+function decodeEntities(encodedString) {
   var translate_re = /&(nbsp|amp|quot|lt|gt);/g;
   var translate = {
       "nbsp":" ",
@@ -109,8 +109,8 @@ app.intent('Devoirs', async(conv, args)=>{
 
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, date))
 
-      works.forEach(async (work) => {
-        reponse = reponse +" "+ work.subject.name +" "+  await decodeEntities(work.description)
+      works.forEach((work) => {
+        reponse = reponse +" "+ work.subject.name +" "+  decodeEntities(work.description)
         console.log(reponse)
       })
 
@@ -121,8 +121,8 @@ app.intent('Devoirs', async(conv, args)=>{
 
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, dateFrom), pronote.toPronoteWeek(session, dateTo))
 
-      works.forEach(async (work) => {
-        reponse = reponse +" "+ work.subject.name +" "+  await decodeEntities(work.description)
+      works.forEach((work) => {
+        reponse = reponse +" "+ work.subject.name +" "+  decodeEntities(work.description)
         console.log(work.description)
       }).then(()=>{
         conv.ask(reponse + "</speak>")
@@ -149,7 +149,7 @@ async function main()
     const devoirs = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, new Date()), pronote.toPronoteWeek(session, new Date())+1);
     console.log(devoirs);
     devoirs.forEach(async(homeworks) => {
-      description = await decodeEntities(homeworks.description);
+      description = decodeEntities(homeworks.description);
       console.log(description);
     });
     
