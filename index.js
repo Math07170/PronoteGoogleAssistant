@@ -117,7 +117,6 @@ app.intent('Devoirs', async(conv, args)=>{
         }
         if(work.for < dateFrom || work.for > dateTo || work.for < new Date()) return;
         reponse = reponse +" En "+ work.subject.name.toLowerCase() +": "+  decodeEntities(work.description)
-        console.log(reponse)
       })
     }
     //Une période
@@ -140,6 +139,7 @@ app.intent('Devoirs', async(conv, args)=>{
     
   }else{
     console.log("Else")
+    console.log(pronote.toPronoteWeek(new Date())-1)
     const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, new Date())-1)
     works.forEach((work) => {
       console.log(work)
