@@ -143,9 +143,15 @@ app.intent('Devoirs', async(conv, args)=>{
     works.forEach((work) => {
       console.log(work)
       if(typeof matiere === 'string'){
-        if(work.subject.name !== matiere) return;
+        if(work.subject.name !== matiere){
+          console.log(work.subject.name + " est différent de "+ matiere);
+          return;
+        } 
       }
-      if(work.for < new Date()) return;
+      if(work.for < new Date()){
+        console.log(work.for + " est plus petit que " + new Date())
+        return;
+      }
       reponse = reponse +" En "+ work.subject.name.toLowerCase() +": "+  decodeEntities(work.description)
     });
   }
