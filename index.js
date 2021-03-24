@@ -101,6 +101,7 @@ app.intent('Emploi du temps', async(conv, args)=>{
 app.intent('Devoirs', async(conv, args)=>{
   reponse = "<speak>Vous avez :"
   const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
+  matiere = args.matieres
   if(typeof args['date-time'] !== 'undefined'){
 
     //Un jour
@@ -110,6 +111,9 @@ app.intent('Devoirs', async(conv, args)=>{
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, date))
 
       works.forEach((work) => {
+        if(typeof matiere === 'string'){
+          if(work.subject.name !== matiere) continue;
+        }
         reponse = reponse +" En "+ work.subject.name.toLowerCase() +": "+  decodeEntities(work.description)
         console.log(reponse)
       })
@@ -122,6 +126,9 @@ app.intent('Devoirs', async(conv, args)=>{
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, dateFrom), pronote.toPronoteWeek(session, dateTo))
 
       works.forEach((work) => {
+        if(typeof matiere === 'string'){
+          if(work.subject.name !== matiere) continue;
+        }
         reponse = reponse +" En "+ work.subject.name.toLowerCase() +": "+  decodeEntities(work.description)
         console.log(work.description)
       })
