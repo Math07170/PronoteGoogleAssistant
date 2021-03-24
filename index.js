@@ -12,6 +12,23 @@ const {dialogflow, Image, Permission} = require('actions-on-google');
 const { response } = require('express');
 const { stringify } = require('actions-on-google/dist/common');
 
+//Utils
+async function decodeEntities(encodedString) {
+  var translate_re = /&(nbsp|amp|quot|lt|gt);/g;
+  var translate = {
+      "nbsp":" ",
+      "amp" : "&",
+      "quot": "\"",
+      "lt"  : "<",
+      "gt"  : ">"
+  };
+  return encodedString.replace(translate_re, function(match, entity) {
+      return translate[entity];
+  }).replace(/&#(\d+);/gi, function(match, numStr) {
+      var num = parseInt(numStr, 10);
+      return String.fromCharCode(num);
+  }).replace(/(<([^>]+)>)/gi, "");
+}
 const app = dialogflow();
 
 //Welcome
@@ -93,8 +110,8 @@ app.intent('Devoirs', async(conv, args)=>{
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, date))
 
       works.forEach(async (work) => {
-        reponse = reponse + work.subject.name + await decodeEntities(work.description)
-        console.log(work.description)
+        reponse = reponse +" "+ work.subject.name +" "+  await decodeEntities(work.description)
+        console.log(reponse)
       })
 
     //Une période
@@ -105,7 +122,7 @@ app.intent('Devoirs', async(conv, args)=>{
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, dateFrom), pronote.toPronoteWeek(session, dateTo))
 
       works.forEach(async (work) => {
-        reponse = reponse + work.subject.name +  await decodeEntities(work.description)
+        reponse = reponse +" "+ work.subject.name +" "+  await decodeEntities(work.description)
         console.log(work.description)
       })
     }
@@ -117,23 +134,7 @@ app.intent('Devoirs', async(conv, args)=>{
 expressApp.post('/', app)
 expressApp.listen(process.env.PORT)
 
-//Utils
-async function decodeEntities(encodedString) {
-  var translate_re = /&(nbsp|amp|quot|lt|gt);/g;
-  var translate = {
-      "nbsp":" ",
-      "amp" : "&",
-      "quot": "\"",
-      "lt"  : "<",
-      "gt"  : ">"
-  };
-  return encodedString.replace(translate_re, function(match, entity) {
-      return translate[entity];
-  }).replace(/&#(\d+);/gi, function(match, numStr) {
-      var num = parseInt(numStr, 10);
-      return String.fromCharCode(num);
-  }).replace(/(<([^>]+)>)/gi, "");
-}
+
 
 async function main()
 {
