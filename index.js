@@ -85,26 +85,33 @@ app.intent('Devoirs', async(conv, args)=>{
   reponse = "<speak>Vous avez :"
   const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
   if(typeof args['date-time'] !== 'undefined'){
+
+    //Un jour
     if(typeof args['date-time'].length === "string"){
       date = new Date(args['date-time'])
+
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, date))
+      
       works.forEach(work => {
-        reponse = reponse + work.subject + await decodeEntities(work.description)
+        reponse = reponse + work.subject.name + await decodeEntities(work.description)
         console.log(work.description)
       })
+
+    //Une période
     }else{
       dateFrom = new Date(args['date-time'].startDate)
       dateTo = new Date(args['date-time'].endDate)
+
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, dateFrom), pronote.toPronoteWeek(session, dateTo))
+
       works.forEach(work => {
-        reponse = reponse + work.subject +  await decodeEntities(work.description)
+        reponse = reponse + work.subject.name +  await decodeEntities(work.description)
         console.log(work.description)
       })
     }
+
     conv.ask(reponse + "</say>")
   }
-  conv.ask("C'est ok")
-  console.log(args)
 })
 
 expressApp.post('/', app)
