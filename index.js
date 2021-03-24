@@ -108,7 +108,7 @@ app.intent('Devoirs', async(conv, args)=>{
     if(typeof args['date-time'].length === "string"){
       date = new Date(args['date-time'])
 
-      const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, date)-1)
+      const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, date)-1, pronote.toPronoteWeek(session, date)-1)
 
       works.forEach((work) => {
         console.log(work)
@@ -139,8 +139,8 @@ app.intent('Devoirs', async(conv, args)=>{
     
   }else{
     console.log("Else")
-    console.log(pronote.toPronoteWeek(new Date())-1)
-    const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, new Date())-1)
+    console.log(new Date())
+    const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, new Date())-1, pronote.toPronoteWeek(session, new Date())-1)
     works.forEach((work) => {
       console.log(work)
       if(typeof matiere === 'string' && matiere !== ''){
@@ -167,6 +167,7 @@ expressApp.listen(process.env.PORT)
 
 async function main()
 {
+  console.log(new Date())
     const session = await pronote.login(url, username, password/*, cas*/);
     
     
