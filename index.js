@@ -99,16 +99,17 @@ app.intent('Emploi du temps', async(conv, args)=>{
 })
 
 app.intent('Devoirs', async(conv, args)=>{
-  reponse = "<speak>Vous avez :"
+  reponse = ""
   const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
   matiere = args.matieres
   if(typeof args['date-time'] !== 'undefined' && args['date-time'] !== ''){
 
     //Un jour
+    console.log(typeof args['date-time'])
     if(typeof args['date-time'] === "string"){
       date = new Date(args['date-time'])
 
-      const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, date)-1, pronote.toPronoteWeek(session, date)-1)
+      const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, date), pronote.toPronoteWeek(session, date))
 
       works.forEach((work) => {
         console.log(work)
@@ -140,7 +141,7 @@ app.intent('Devoirs', async(conv, args)=>{
   }else{
     console.log("Else")
     console.log(new Date())
-    const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, new Date())-1, pronote.toPronoteWeek(session, new Date())-1)
+    const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, new Date()), pronote.toPronoteWeek(session, new Date()))
     works.forEach((work) => {
       console.log(work)
       if(typeof matiere === 'string' && matiere !== ''){
@@ -157,7 +158,7 @@ app.intent('Devoirs', async(conv, args)=>{
     });
   }
   console.log(reponse)
-  conv.ask(reponse + "</speak>")
+  conv.ask("<speak>Vous avez :"+reponse + "</speak>")
 })
 
 expressApp.post('/', app)
