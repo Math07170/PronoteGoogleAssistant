@@ -107,7 +107,7 @@ app.intent('Devoirs', async(conv, args)=>{
     //Un jour
     console.log(typeof args['date-time'])
     if(typeof args['date-time'] === "string"){
-      date = new Date(args['date-time'])
+      date = new Date(args['date-time']).setHours(0)
 
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, date), pronote.toPronoteWeek(session, date))
 
@@ -140,7 +140,7 @@ app.intent('Devoirs', async(conv, args)=>{
     
   }else{
     console.log("Else")
-    console.log(new Date())
+    console.log(new Date()).setHours(0)
     const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, new Date()), pronote.toPronoteWeek(session, new Date()))
     works.forEach((work) => {
       console.log(work)
