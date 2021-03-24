@@ -83,12 +83,12 @@ app.intent('Emploi du temps', async(conv, args)=>{
 
 app.intent('Devoirs', async(conv, args)=>{
   console.log(typeof args['date-time'])
-  console.log(args['date-time'].length)
+
   if(typeof args['date-time'] !== 'undefined'){
-    if(args['date-time'].length === 1){
+    if(typeof args['date-time'].length === "string"){
       date = new Date(args['date-time'])
       console.log(date)
-    }else if(args['date-time'].length === 2){
+    }else{
       dateFrom = new Date(args['date-time'].startDate)
       console.log(dateFrom)
       dateTo = new Date(args['date-time'].endDate)
