@@ -82,6 +82,7 @@ app.intent('Emploi du temps', async(conv, args)=>{
 })
 
 app.intent('Devoirs', async(conv, args)=>{
+  conv.ask("C'est ok")
   console.log(args)
 })
 
