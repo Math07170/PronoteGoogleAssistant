@@ -103,7 +103,7 @@ app.intent('Devoirs', async(conv, args)=>{
   const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
   matiere = args.matieres
   console.log(args['date-time'])
-  if(typeof args['date-time'] !== 'undefined'){
+  if(typeof args['date-time'] !== 'undefined' || arg['date-time'] === ''){
 
     //Un jour
     if(typeof args['date-time'].length === "string"){
