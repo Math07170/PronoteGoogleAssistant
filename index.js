@@ -114,6 +114,7 @@ app.intent('Devoirs', async(conv, args)=>{
         if(typeof matiere === 'string'){
           if(work.subject.name !== matiere) return;
         }
+        if(work.for < dateFrom || work.for > dateTo) return;
         reponse = reponse +" En "+ work.subject.name.toLowerCase() +": "+  decodeEntities(work.description)
         console.log(reponse)
       })
@@ -129,13 +130,25 @@ app.intent('Devoirs', async(conv, args)=>{
         if(typeof matiere === 'string'){
           if(work.subject.name !== matiere) return;
         }
+        if(work.for < dateFrom || work.for > dateTo) return;
+
         reponse = reponse +" En "+ work.subject.name.toLowerCase() +": "+  decodeEntities(work.description)
         console.log(work.description)
       })
     }
-    console.log(reponse)
-    conv.ask(reponse + "</speak>")
+    
+  }else{
+    const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(new Date))
+    works.forEach((work) => {
+      if(typeof matiere === 'string'){
+        if(work.subject.name !== matiere) return;
+      }
+      if(work.for < new Date()) return;
+      reponse = reponse +" En "+ work.subject.name.toLowerCase() +": "+  decodeEntities(work.description)
+    });
   }
+  console.log(reponse)
+  conv.ask(reponse + "</speak>")
 })
 
 expressApp.post('/', app)
