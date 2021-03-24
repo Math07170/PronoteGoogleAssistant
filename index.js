@@ -82,14 +82,14 @@ app.intent('Emploi du temps', async(conv, args)=>{
 })
 
 app.intent('Devoirs', async(conv, args)=>{
-  response = "<speak>Vous avez :"
+  reponse = "<speak>Vous avez :"
   const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
   if(typeof args['date-time'] !== 'undefined'){
     if(typeof args['date-time'].length === "string"){
       date = new Date(args['date-time'])
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, date))
       works.forEach(work => {
-        response = response + work.subject + decodeEntities(work.description)
+        reponse = reponse + work.subject + decodeEntities(work.description)
         console.log(work.description)
       })
     }else{
@@ -97,11 +97,11 @@ app.intent('Devoirs', async(conv, args)=>{
       dateTo = new Date(args['date-time'].endDate)
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, dateFrom), pronote.toPronoteWeek(session, dateTo))
       works.forEach(work => {
-        response = response + work.subject + decodeEntities(work.description)
+        reponse = reponse + work.subject + decodeEntities(work.description)
         console.log(work.description)
       })
     }
-    conv.ask(response + "</say>")
+    conv.ask(reponse + "</say>")
   }
   conv.ask("C'est ok")
   console.log(args)
