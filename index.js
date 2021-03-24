@@ -139,7 +139,7 @@ app.intent('Devoirs', async(conv, args)=>{
     
   }else{
     console.log("Else")
-    const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, new Date()))
+    const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, new Date()), pronote.toPronoteWeek(session, new Date())+1)
     works.forEach((work) => {
       if(typeof matiere === 'string'){
         if(work.subject.name !== matiere) return;
