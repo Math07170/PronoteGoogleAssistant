@@ -108,11 +108,12 @@ app.intent('Devoirs', async(conv, args)=>{
     if(typeof args['date-time'].length === "string"){
       date = new Date(args['date-time'])
 
-      const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, date))
+      const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, date)-1)
 
       works.forEach((work) => {
+        console.log(work)
         if(typeof matiere === 'string'){
-          if(work.subject.name !== matiere) return;
+          if(work.subject.name !== matiere && matiere !== '') return;
         }
         if(work.for < dateFrom || work.for > dateTo) return;
         reponse = reponse +" En "+ work.subject.name.toLowerCase() +": "+  decodeEntities(work.description)
@@ -123,12 +124,12 @@ app.intent('Devoirs', async(conv, args)=>{
     else{
       dateFrom = new Date(args['date-time'].startDate)
       dateTo = new Date(args['date-time'].endDate)
-
-      const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, dateFrom), pronote.toPronoteWeek(session, dateTo))
+      const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, dateFrom)-1, pronote.toPronoteWeek(session, dateTo)-1)
 
       works.forEach((work) => {
+        console.log(work)
         if(typeof matiere === 'string'){
-          if(work.subject.name !== matiere) return;
+          if(work.subject.name !== matiere && matiere !== '') return;
         }
         if(work.for < dateFrom || work.for > dateTo) return;
 
@@ -139,10 +140,10 @@ app.intent('Devoirs', async(conv, args)=>{
     
   }else{
     console.log("Else")
-    const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, new Date()), pronote.toPronoteWeek(session, new Date())+1)
+    const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, new Date())-1)
     works.forEach((work) => {
       console.log(work)
-      if(typeof matiere === 'string'){
+      if(typeof matiere === 'string' && matiere !== ''){
         if(work.subject.name !== matiere){
           console.log(work.subject.name + " est différent de "+ matiere);
           return;
