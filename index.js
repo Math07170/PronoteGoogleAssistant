@@ -1,10 +1,12 @@
 const pronote = require('pronote-api');
-const express = require('express')
-const bodyParser = require('body-parser')
+const express = require('express');
+const bodyParser = require('body-parser');
 
 const expressApp = express().use(bodyParser.json())
 
 const url = 'https://0070004s.index-education.net/pronote/eleve.html';
+const username = 'ROBERT13';
+const password = 'cornichon07';
 
 const {dialogflow, Image, Permission} = require('actions-on-google');
 const { response } = require('express');
@@ -12,6 +14,7 @@ const { stringify } = require('actions-on-google/dist/common');
 
 const app = dialogflow();
 
+//Welcome
 app.intent('Default Welcome Intent', async(conv) => {
   if(typeof conv.user.storage.username !== 'undefined' && typeof conv.user.storage.password !== 'undefined' ){
     if(typeof conv.user.storage.name === 'undefined'){
@@ -25,6 +28,8 @@ app.intent('Default Welcome Intent', async(conv) => {
   }
   
 })
+
+//Connection
 app.intent('Login', (conv, args) => {
   if(args['username'] !== ''){
     conv.user.storage.username = args['username']
@@ -37,6 +42,8 @@ app.intent('Login', (conv, args) => {
     conv.ask("Pas de donnée saisie veuillez réessayer")
   }
 })
+
+//Moyene Matière
 app.intent('Moyenne Matiere', async (conv, args) => {
   const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
   const marks = await session.marks();
@@ -51,6 +58,8 @@ app.intent('Moyenne Matiere', async (conv, args) => {
     conv.ask("Pas de notes saisies pour ce trimestre !")
   })
 })
+
+//Emploi du temps
 app.intent('Emploi du temps', async(conv, args)=>{
   const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
   
@@ -71,24 +80,45 @@ app.intent('Emploi du temps', async(conv, args)=>{
   conv.ask(answer)
   session.logout()
 })
-expressApp.post('/', app)
 
+app.intent('Devoirs', async(conv, args)=>{
+  console.log(args)
+})
+
+expressApp.post('/', app)
 expressApp.listen(process.env.PORT)
 
-// Exemple
-
+//Utils
+async function decodeEntities(encodedString) {
+  var translate_re = /&(nbsp|amp|quot|lt|gt);/g;
+  var translate = {
+      "nbsp":" ",
+      "amp" : "&",
+      "quot": "\"",
+      "lt"  : "<",
+      "gt"  : ">"
+  };
+  return encodedString.replace(translate_re, function(match, entity) {
+      return translate[entity];
+  }).replace(/&#(\d+);/gi, function(match, numStr) {
+      var num = parseInt(numStr, 10);
+      return String.fromCharCode(num);
+  }).replace(/(<([^>]+)>)/gi, "");
+}
 
 async function main()
 {
     const session = await pronote.login(url, username, password/*, cas*/);
     
+    
     console.log(session.user.name); // Affiche le nom de l'élève
     console.log(session.user.studentClass.name); // Affiche la classe de l'élève
-    
-    const timetable = await session.timetable(); // Récupérer l'emploi du temps d'aujourd'hui
-    const marks = await session.marks(); // Récupérer les notes du trimestre
-    console.log(marks.subjects[0].marks);
-    console.log(process.env.PORT)
+    const devoirs = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, new Date()), pronote.toPronoteWeek(session, new Date())+1);
+    console.log(devoirs);
+    devoirs.forEach(async(homeworks) => {
+      description = await decodeEntities(homeworks.description);
+      console.log(description);
+    });
     
     // etc. les fonctions utilisables sont 'timetable', 'marks', 'contents', 'evaluations', 'absences', 
     // 'homeworks', 'infos', et 'menu', sans oublier les champs 'user' et 'params' qui regorgent d'informations.
