@@ -102,6 +102,7 @@ app.intent('Devoirs', async(conv, args)=>{
   reponse = "<speak>Vous avez :"
   const session = await pronote.login(url, conv.user.storage.username, conv.user.storage.password/*, cas*/);
   matiere = args.matieres
+  console.log(args['date-time'])
   if(typeof args['date-time'] !== 'undefined'){
 
     //Un jour
