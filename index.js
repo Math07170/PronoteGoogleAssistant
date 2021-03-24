@@ -124,13 +124,10 @@ app.intent('Devoirs', async(conv, args)=>{
       works.forEach((work) => {
         reponse = reponse +" "+ work.subject.name +" "+  decodeEntities(work.description)
         console.log(work.description)
-      }).then(()=>{
-        conv.ask(reponse + "</speak>")
       })
-
     }
     console.log(reponse)
-    
+    conv.ask(reponse + "</speak>")
   }
 })
 
