@@ -112,7 +112,7 @@ app.intent('Devoirs', async(conv, args)=>{
 
       works.forEach((work) => {
         if(typeof matiere === 'string'){
-          if(work.subject.name !== matiere) continue;
+          if(work.subject.name !== matiere) return;
         }
         reponse = reponse +" En "+ work.subject.name.toLowerCase() +": "+  decodeEntities(work.description)
         console.log(reponse)
@@ -127,7 +127,7 @@ app.intent('Devoirs', async(conv, args)=>{
 
       works.forEach((work) => {
         if(typeof matiere === 'string'){
-          if(work.subject.name !== matiere) continue;
+          if(work.subject.name !== matiere) return;
         }
         reponse = reponse +" En "+ work.subject.name.toLowerCase() +": "+  decodeEntities(work.description)
         console.log(work.description)
