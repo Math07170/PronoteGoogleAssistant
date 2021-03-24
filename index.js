@@ -105,14 +105,12 @@ app.intent('Devoirs', async(conv, args)=>{
   if(typeof args['date-time'] !== 'undefined' && args['date-time'] !== ''){
 
     //Un jour
-    console.log(typeof args['date-time'])
     if(typeof args['date-time'] === "string"){
       date = new Date(args['date-time']).setHours(0)
 
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, date), pronote.toPronoteWeek(session, date))
 
       works.forEach((work) => {
-        console.log(work)
         if(typeof matiere === 'string'){
           if(work.subject.name !== matiere && matiere !== '') return;
         }
@@ -127,7 +125,6 @@ app.intent('Devoirs', async(conv, args)=>{
       const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, dateFrom)-1, pronote.toPronoteWeek(session, dateTo)-1)
 
       works.forEach((work) => {
-        console.log(work)
         if(typeof matiere === 'string'){
           if(work.subject.name !== matiere && matiere !== '') return;
         }
@@ -139,9 +136,8 @@ app.intent('Devoirs', async(conv, args)=>{
     }
     
   }else{
-    const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, new Date()), pronote.toPronoteWeek(session, new Date()))
+    const works = await pronote.fetchHomeworks(session, pronote.toPronoteWeek(session, new Date()), pronote.toPronoteWeek(session, new Date())+1)
     works.forEach((work) => {
-      console.log(work)
       if(typeof matiere === 'string' && matiere !== ''){
         if(work.subject.name !== matiere){
           console.log(work.subject.name + " est différent de "+ matiere);
@@ -155,7 +151,6 @@ app.intent('Devoirs', async(conv, args)=>{
       reponse = reponse +" En "+ work.subject.name.toLowerCase() +": "+  decodeEntities(work.description)
     });
   }
-  console.log(reponse)
   conv.ask("<speak>Vous avez :"+reponse + "</speak>")
 })
 
