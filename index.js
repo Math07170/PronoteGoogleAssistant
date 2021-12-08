@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 
 const expressApp = express().use(bodyParser.json())
 
-const url = 'https://0420041s.index-education.net/pronote/eleve.html?login=true';
+const url = 'https://0420041s.index-education.net/pronote/eleve.html';
 const username = 'MROBERT';
 const password = '12345';
 
