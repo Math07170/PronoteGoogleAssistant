@@ -4,9 +4,9 @@ const bodyParser = require('body-parser');
 
 const expressApp = express().use(bodyParser.json())
 
-const url = 'https://0070004s.index-education.net/pronote/eleve.html';
-const username = 'ROBERT13';
-const password = 'cornichon07';
+const url = 'https://0420041s.index-education.net/pronote/eleve.html?login=true';
+const username = 'MROBERT';
+const password = '12345';
 
 const {dialogflow, Image, Permission} = require('actions-on-google');
 const { response } = require('express');
